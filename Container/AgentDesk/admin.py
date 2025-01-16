@@ -1,6 +1,15 @@
 from django.contrib import admin
-from .models import teams,users,tickets
+from .models import teams,profile,tickets
 
-admin.site.register(teams)
-admin.site.register(users)
+class teamsAdmin(admin.ModelAdmin):
+    fields = ["team"]
+    list_display = ["team"]
+    
+admin.site.register(teams,teamsAdmin)
+
+class profileAdmin(admin.ModelAdmin):
+    fields = ["name","role","id_team","user"]
+    list_display = ["name","role","id_team","user"]
+    
+admin.site.register(profile,profileAdmin)
 admin.site.register(tickets)

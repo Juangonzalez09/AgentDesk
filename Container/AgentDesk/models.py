@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class teams(models.Model):
@@ -9,16 +9,18 @@ class teams(models.Model):
         db_table = "Teams"
         verbose_name ="Team"
         verbose_name_plural = "Teams"
+    def __str__(self) -> str :
+        return self.team
 
-class users(models.Model):
+class profile(models.Model):
     name = models.CharField(verbose_name="Name",max_length=40)
     role = models.CharField(verbose_name="Role",max_length=20)
     id_team = models.ForeignKey(teams, on_delete=models.CASCADE)
-    
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     class Meta:
-        db_table = "Users"
-        verbose_name ="User"
-        verbose_name_plural = "Users"
+        db_table = "Profiles"
+        verbose_name ="Profile"
+        verbose_name_plural = "Profiles"
     
 class tickets(models.Model):
     title = models.CharField(verbose_name="title",max_length=50,null=False,blank=False)
@@ -28,7 +30,7 @@ class tickets(models.Model):
     email = models.CharField(verbose_name="Email",max_length=50)
     contact = models.CharField(verbose_name="Phone",max_length=30)
     state = models.CharField(verbose_name="State",max_length=30)
-    id_user = models.ForeignKey(users,on_delete=models.CASCADE)
+    id_user = models.ForeignKey(profile,on_delete=models.CASCADE)
     id_grupo = models.ForeignKey(teams,on_delete=models.CASCADE)
     
     class Meta:
