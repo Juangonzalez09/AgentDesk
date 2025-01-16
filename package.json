@@ -1,0 +1,15 @@
+{
+  "name": "agentdesk",
+  "version": "1.0.0",
+  "description": "App web para el manejo de tickets de soporte.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tailwindcss -i ./Container/AgentDesk/static/index.css -o ./Container/AgentDesk/static/main.css --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
