@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .forms import LoginForm
 #Funcion index principal
@@ -15,7 +16,7 @@ def IndexView(request):
             if user is not None:
                 if user.is_active:
                     login(request,user)
-                    return HttpResponse('Usuario Aunteticado')
+                    return redirect('/Home/')
                 else:
                     return HttpResponse('El usuario no esta activo')
             else:
@@ -24,9 +25,10 @@ def IndexView(request):
          form = LoginForm()     
          return render(request,'index.html',{'form':form})  
 
+@login_required(login_url='/')
 def HomeView(request):
     return render(request,"base.html")
 
-
+@login_required(login_url='/')
 def TicketsView(request):
     return render(request,"pages/home.html")
