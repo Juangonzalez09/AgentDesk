@@ -23,3 +23,10 @@ def IndexView(request):
     else:
          form = LoginForm()     
          return render(request,'index.html',{'form':form})  
+
+def HomeView(request):
+    return render(request,"base.html")
+
+
+def TicketsView(request):
+    return render(request,"pages/home.html")
