@@ -3,7 +3,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class teams(models.Model):
-    team = models.CharField(verbose_name="Team",max_length=20,null=False)
+    TEAMS_CHOICES = [
+        ('Hardware', 'Hardware'),
+        ('Software', 'Software'),
+        ('Red o Internet', 'Red o Internet'),
+        ('Seguridad', 'Seguridad'),
+        ('Otro', 'Otro'),
+    ]
+    team = models.CharField(verbose_name="Team",max_length=20,null=False,choices=TEAMS_CHOICES)
     
     class Meta:
         db_table = "Teams"
@@ -23,16 +30,29 @@ class profile(models.Model):
         verbose_name_plural = "Profiles"
     
 class tickets(models.Model):
+  
+    STATE_CHOICES = [
+        ('NEW', 'Nuevo'),
+        ('IN_PROGRESS', 'En progreso'),
+        ('RESOLVED', 'Resuelto'),
+        ('CLOSED', 'Cerrado'),
+    ]
+
     title = models.CharField(verbose_name="title",max_length=50,null=False,blank=False)
     description = models.TextField(verbose_name="Descriptios",max_length=500)
-    type_error = models.CharField(verbose_name="Type Error",max_length=20)
     client = models.CharField(verbose_name="Client",max_length=30)
     email = models.CharField(verbose_name="Email",max_length=50)
     contact = models.CharField(verbose_name="Phone",max_length=30)
-    state = models.CharField(verbose_name="State",max_length=30)
-    id_user = models.ForeignKey(profile,on_delete=models.CASCADE)
-    id_grupo = models.ForeignKey(teams,on_delete=models.CASCADE)
-    
+    created_by = models.ForeignKey(User,on_delete=models.CASCADE,related_name='tickets_created',null=True, blank=True)
+    assigned_to = models.ForeignKey(User,on_delete=models.CASCADE,related_name='tickets_assigned', null=True, blank=True)
+    type_error = models.ForeignKey(teams,on_delete=models.CASCADE,verbose_name="Tipo de error",max_length=30)
+    state = models.CharField(
+        verbose_name="State",
+        max_length=20,  
+        choices=STATE_CHOICES,
+        default='NEW'
+    )
+
     class Meta:
         db_table = "Tickets"
         verbose_name ="Ticket"
