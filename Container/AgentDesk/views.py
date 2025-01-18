@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse , JsonResponse
 from .forms import LoginForm
+from .models import profile,tickets
 #Funcion index principal
 
 def IndexView(request):
@@ -27,7 +28,21 @@ def IndexView(request):
 
 @login_required(login_url='/')
 def HomeView(request):
-    return render(request,"base.html")
+    # Obtener el usuario que ha iniciado sesión
+    user = request.user
+    try:
+        profileq = profile.objects.get(user=user)
+        
+    except profileq.DoesNotExist:
+        
+        profileq = None
+        
+    id_teamq = profileq.id_team
+    
+    Tickets_q = tickets.objects.filter(type_error=id_teamq)
+    
+    return render(request,"base.html",{'Tickets_q':Tickets_q})
+    
 
 @login_required(login_url='/')
 def TicketsView(request):

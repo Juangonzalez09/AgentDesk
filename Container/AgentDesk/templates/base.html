@@ -168,7 +168,15 @@
       </nav>
     </div>
     </div>
-     <!-- Contenido principal -->
+      <div>
+        {% for i in Tickets_q %}
+        <p>
+          {{i.title}}
+        </p>
+        {%endfor%}
+        
+
+      </div>
      <main>
       {% block content %}
       <!-- Este bloque se llenará con el contenido de cada página -->
