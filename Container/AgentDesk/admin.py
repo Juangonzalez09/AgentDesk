@@ -12,8 +12,8 @@ class profileAdmin(admin.ModelAdmin):
     list_display = ["name","role","id_team","user"]
     
 class ticketsAdmin(admin.ModelAdmin):
-    fields = ["title","description","client","email","contact","type_error","created_by","assigned_to","state"]
-    list_display = ["title","description","client","email","contact","type_error","created_by","assigned_to","state"]
+    fields = ["title","description","client","email","contact","type_error","created_by","assigned_to","state","priority","area"]
+    list_display = ["title","description","client","email","contact","type_error","created_by","assigned_to","state","priority","date","area"]
 
 admin.site.register(profile,profileAdmin)
 admin.site.register(tickets,ticketsAdmin)

@@ -34,14 +34,15 @@ def HomeView(request):
         profileq = profile.objects.get(user=user)
         
     except profileq.DoesNotExist:
-        
+
         profileq = None
-        
+    
+    #validar error de usuario NONE
     id_teamq = profileq.id_team
     
     Tickets_q = tickets.objects.filter(type_error=id_teamq)
     
-    return render(request,"base.html",{'Tickets_q':Tickets_q})
+    return render(request,"pages/home.html",{'Tickets_q':Tickets_q})
     
 
 @login_required(login_url='/')

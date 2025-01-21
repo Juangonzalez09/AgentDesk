@@ -37,12 +37,25 @@ class tickets(models.Model):
         ('RESOLVED', 'Resuelto'),
         ('CLOSED', 'Cerrado'),
     ]
+    PRIORITY_CHOICES = [
+        ('LOW', 'Low'),
+        ('MEDIUM', 'Medium'),
+        ('HIGH', 'High'),
+    ]
 
     title = models.CharField(verbose_name="title",max_length=50,null=False,blank=False)
     description = models.TextField(verbose_name="Descriptios",max_length=500)
     client = models.CharField(verbose_name="Client",max_length=30)
     email = models.CharField(verbose_name="Email",max_length=50)
     contact = models.CharField(verbose_name="Phone",max_length=30)
+    priority = models.CharField(
+        verbose_name="Priority", 
+        max_length=50,
+        choices=PRIORITY_CHOICES,
+        default='LOW'
+        )
+    date = models.DateTimeField(auto_now_add=True,verbose_name="Date")
+    area = models.CharField(verbose_name="Area",max_length=70,null=False)
     created_by = models.ForeignKey(User,on_delete=models.CASCADE,related_name='tickets_created',null=True, blank=True)
     assigned_to = models.ForeignKey(User,on_delete=models.CASCADE,related_name='tickets_assigned', null=True, blank=True)
     type_error = models.ForeignKey(teams,on_delete=models.CASCADE,verbose_name="Tipo de error",max_length=30)
