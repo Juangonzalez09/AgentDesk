@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',IndexView),
     path('Home/',HomeView),
-    path('Home/Tickets',TicketsView),
+    path('Home/Ticket/<int:ticket_id>/',TicketsView,name="detailTicket"),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     
 ]

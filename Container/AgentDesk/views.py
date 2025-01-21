@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate, login 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse , JsonResponse
@@ -46,5 +46,10 @@ def HomeView(request):
     
 
 @login_required(login_url='/')
-def TicketsView(request):
-    return render(request,"pages/home.html")
+
+def TicketsView(request,ticket_id):
+    ticket = get_object_or_404(tickets,id=ticket_id)
+    
+    return render(request, 'pages/detailTicket.html',{'ticket':ticket})
+    
+

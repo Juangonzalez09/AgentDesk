@@ -1,50 +1,52 @@
-{% extends 'base.html' %}
-
-{% block title %}Tickets generales{% endblock %}
-
-{% block count %}{{ Tickets_q|length }}{% endblock %}
-
+{% extends 'base.html' %} {%block count %}{{ Tickets_q|length }}{% endblock %}
 {% block content %}
 <div class="mt-10 p-1 m-2">
-    {% for i in Tickets_q %}
-    <div class="flex items-center justify-between bg-white border border-gray-300 rounded-md p-4 shadow-sm">
-        <!-- Izquierda: Detalles del ticket -->
-        <div class="flex items-start">
+  {% for i in Tickets_q %}
+
+  <a href="{% url 'detailTicket' i.id %}">
+    <div
+      class="flex items-center justify-between bg-white border border-gray-300 rounded-md p-4 shadow-sm"
+    >
+      <!-- Izquierda: Detalles del ticket -->
+      <div class="flex items-start">
         <!-- Imagen del usuario -->
         <img
-            src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Scooter"  
-            alt="Usuario"
-            class="w-10 h-10 rounded-full mr-4"
+          src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Scooter"
+          alt="Usuario"
+          class="w-10 h-10 rounded-full mr-4"
         />
         <!-- Información del ticket -->
         <div>
-            <!-- Título del ticket -->
-            <h2 class="text-sm font-medium text-gray-800">
-            {{i.title}} <span class="text-gray-400">#{{i.id}}</span>
-            </h2>
-            <!-- Nombre del usuario y estado -->
-            <p class="text-xs text-gray-500">
+          <!-- Título del ticket -->
+          <h2 class="text-sm font-medium text-gray-800">
+            {{i.title}} <span class="text-gray-400">#{{ i.id}}</span>
+          </h2>
+          <!-- Nombre del usuario y estado -->
+          <p class="text-xs text-gray-500">
             {{i.client}} • {{i.area}} • {{i.date}}
-            </p>
+          </p>
         </div>
+      </div>
+
+      <!-- Derecha: Estado y prioridad -->
+      <div class="">
+        <!-- Prioridad -->
+        <span
+          class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full"
+        >
+          {{i.priority}}
+        </span>
+        <!-- Asignación -->
+        <div class="text-xs px-2 py-1 text-gray-500">
+          <p>AcmeCorp / Anna Joh...</p>
         </div>
-    
-        <!-- Derecha: Estado y prioridad -->
-        <div class="">
-            <!-- Prioridad -->
-            <span class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full">
-                {{i.priority}}
-            </span>
-            <!-- Asignación -->
-            <div class="text-xs px-2 py-1 text-gray-500">
-                <p>AcmeCorp / Anna Joh...</p>
-            </div>
-            <!-- Estado -->
-            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
-                {{i.state}}
-            </span>
-        </div>
+        <!-- Estado -->
+        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
+          {{i.state}}
+        </span>
+      </div>
     </div>
-    {%endfor%}
-    </div>
+  </a>
+  {%endfor%}
+</div>
 {% endblock %}
