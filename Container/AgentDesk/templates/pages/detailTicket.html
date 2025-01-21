@@ -26,21 +26,28 @@
     >
   </div>
 
-  <!-- Reply Section -->
-  <div class="mt-6">
-    <textarea
-      class="w-full p-4 bg-gray-200 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      rows="4"
-      placeholder="Escribe tu respuesta..."
-    ></textarea>
-    <div class="flex justify-between items-center mt-4">
-      <button
-        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-      >
-        Enviar Respuesta
-      </button>
+  <div class="mt-6 space-y-4">
+    {%for i in commentq%}
+    <div class="bg-teal-500 p-4 rounded-lg">
+      <p class="text-sm text-gray-400">21/1/2024, 10:30:00</p>
+      <p class="mt-2">{{i.coment}}</p>
     </div>
+    {%endfor%}
   </div>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="mt-6">
+      <div class="flex justify-between items-center mt-4">
+        <label> {{form.as_p }} </label>
+        <button
+          type="submit"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          Enviar Comentario sobre el Ticket
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
 
 {% endblock %}

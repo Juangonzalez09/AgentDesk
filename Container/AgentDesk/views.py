@@ -2,8 +2,8 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate, login 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse , JsonResponse
-from .forms import LoginForm
-from .models import profile,tickets
+from .forms import LoginForm,commentForm
+from .models import profile,tickets,comment
 #Funcion index principal
 
 def IndexView(request):
@@ -49,7 +49,24 @@ def HomeView(request):
 
 def TicketsView(request,ticket_id):
     ticket = get_object_or_404(tickets,id=ticket_id)
+    commentq = comment.objects.filter(ticket=ticket)  
+    if request.method == 'POST':
+        form = commentForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)  # No lo guardes aún
+            comentario.ticket = ticket  # Asigna el ticket al comentario
+            comentario.save()  # Ahora sí, guárdalo
+            return redirect(request.path)  # Recarga la página para ver el comentario agregado
+    else :
+            
+            form = commentForm()
+            return render(request, 'pages/detailTicket.html',{'ticket':ticket,
+                                                        'commentq' : commentq,
+                                                        'form':form
+                                                        
+                                                  })
+            
     
-    return render(request, 'pages/detailTicket.html',{'ticket':ticket})
+
     
 

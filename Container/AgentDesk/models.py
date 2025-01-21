@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+
+    
+      
+
 class teams(models.Model):
     TEAMS_CHOICES = [
         ('Hardware', 'Hardware'),
@@ -65,10 +69,24 @@ class tickets(models.Model):
         choices=STATE_CHOICES,
         default='NEW'
     )
+    
 
     class Meta:
         db_table = "Tickets"
         verbose_name ="Ticket"
         verbose_name_plural = "Tickets"
+    def __str__(self) -> str :
+        return self.title
+class comment(models.Model): 
+    ticket = models.ForeignKey(tickets,related_name="Comentarios",on_delete=models.CASCADE)
+    coment = models.TextField(verbose_name="Coment",max_length=300)
+    date = models.DateTimeField(auto_now_add=True,verbose_name="date")
+         
     
+    
+    class Meta:
+        db_table = "Comments"
+        verbose_name ="Commet"
+        verbose_name_plural = "Comments"
+   
     
