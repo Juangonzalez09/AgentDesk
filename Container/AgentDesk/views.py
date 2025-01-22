@@ -50,6 +50,8 @@ def HomeView(request):
 def TicketsView(request,ticket_id):
     ticket = get_object_or_404(tickets,id=ticket_id)
     commentq = comment.objects.filter(ticket=ticket)  
+    users = profile.objects.filter(id_team=ticket.type_error)
+    
     if request.method == 'POST':
         form = commentForm(request.POST)
         if form.is_valid():
@@ -62,7 +64,9 @@ def TicketsView(request,ticket_id):
             form = commentForm()
             return render(request, 'pages/detailTicket.html',{'ticket':ticket,
                                                         'commentq' : commentq,
-                                                        'form':form
+                                                        'form':form,
+                                                        'users':users,
+                                                        'prioritis' : tickets.PRIORITY_CHOICES
                                                         
                                                   })
             

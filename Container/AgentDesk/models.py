@@ -61,7 +61,7 @@ class tickets(models.Model):
     date = models.DateTimeField(auto_now_add=True,verbose_name="Date")
     area = models.CharField(verbose_name="Area",max_length=70,null=False)
     created_by = models.ForeignKey(User,on_delete=models.CASCADE,related_name='tickets_created',null=True, blank=True)
-    assigned_to = models.ForeignKey(User,on_delete=models.CASCADE,related_name='tickets_assigned', null=True, blank=True)
+    assigned_to = models.ForeignKey(User,on_delete=models.CASCADE,related_name='tickets_assigned', null=True, blank=True,default='Sin agente')
     type_error = models.ForeignKey(teams,on_delete=models.CASCADE,verbose_name="Tipo de error",max_length=30)
     state = models.CharField(
         verbose_name="State",
@@ -77,12 +77,12 @@ class tickets(models.Model):
         verbose_name_plural = "Tickets"
     def __str__(self) -> str :
         return self.title
+    
 class comment(models.Model): 
     ticket = models.ForeignKey(tickets,related_name="Comentarios",on_delete=models.CASCADE)
     coment = models.TextField(verbose_name="Coment",max_length=300)
     date = models.DateTimeField(auto_now_add=True,verbose_name="date")
          
-    
     
     class Meta:
         db_table = "Comments"
