@@ -14,6 +14,13 @@ class commentForm(forms.ModelForm):
     class Meta:
         model = comment
         fields  = ['coment']
+        widgets = {
+            'coment': forms.Textarea(attrs={
+                'class': 'w-full p-4 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500',
+                'rows':3,
+                'placeholder': 'Ingrese un comentario'
+            }),
+        }
     
     
     
